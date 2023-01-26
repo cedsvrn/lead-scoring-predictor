@@ -1,0 +1,43 @@
+name: Continuous Integration
+
+# Triggers the workflow on PRs to master
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# CI workflow jobs definition
+jobs:
+   # This workflow contains a single job called "Linting"
+   Linting:
+     name: Static Analysis
+     # The type of runner that the job will run on
+     runs-on: ubuntu-18.04
+     
+     # Sequence of tasks that will be executed as part of the job
+     steps:
+         
+       - name: Checkout the repository 
+         uses: actions/checkout@v2
+       
+       - name: Installing packages
+         run: |
+           python3 -m pip install --upgrade pip setuptools wheel
+           pip install flake8-docstrings
+       # Invoking flake8 with a list of ignored warnings, namely :
+       #   D104 : docstring at the beginning of each public package
+       #   E111 : PEP8 recommends that Python code indentation be a multiple of four.
+       #   E203 : Colons should not have any space before them.
+       #   E402 : All module level imports should be at the top of the file.
+       #   E501 : Line lengths are recommended to be no greater than 79 characters.
+       #   F401 : A module has been imported but is not used.
+       #   F403 : The imported module should be explicitly defined.
+       #   F405 : Variable not been defined or been imported in the star imports
+       #   W291 : There should be no whitespace after the final character in a line.
+       #   W293 : Blank lines should not contain any tabs or spaces.
+       #   W503 : Line break occurred before a binary operator.
+
+       - name: Run flake8 
+         run: |
+           /home/runner/.local/bin/flake8 --docstring-convention numpy --ignore=W503,D104,E111,E203,E402,E501,F401,F403,F405,W291,W293,BLK100 --max-complexity 18
