@@ -10,5 +10,5 @@ In this repository, we will explore multiple predictors such as:
 - Support Vector Machine
 
 On the deployment side:
-- To complete batch use cases we will insert daily lea predictions into a BigQuery database
+- To complete batch use cases we will insert daily lead predictions into a BigQuery database
 - FastAPI is built to send real time predictions to consumer applications
